@@ -5,18 +5,11 @@ module EnumField
   if defined? Rails::Railtie
     require 'rails'
     class Railtie < Rails::Railtie
-      initializer "enum_field.initialization" do
+      config.after_initialize do
         ActiveSupport.on_load :active_record do
-          EnumField::Railtie.insert
+          ActiveRecord::Base.send(:extend, EnumField::EnumeratedAttribute)
         end  
       end
-    end
-  end
-
-  class Railtie
-    def self.insert      
-      Module.send(:include, EnumField::DefineEnum)
-      ActiveRecord::Base.send(:extend, EnumField::EnumeratedAttribute)
     end
   end
 end

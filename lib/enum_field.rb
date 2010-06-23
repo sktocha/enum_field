@@ -19,4 +19,5 @@ module EnumField
   class ObjectNotFound < StandardError; end
 end
 
+Module.send(:include, EnumField::DefineEnum)
 require 'enum_field/railtie' if defined?(Rails)

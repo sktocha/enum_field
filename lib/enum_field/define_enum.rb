@@ -6,9 +6,11 @@ module EnumField
       yield @enum_builder
 
       [:all, :names, :find_by_id, :find, :first, :last].each do |method|
-        define_method(method) do |*args, &block|
-          @enum_builder.send(method, *args, &block)
-        end
+        instance_eval <<-END
+          def #{method}(*args, &block)
+            @enum_builder.send(:#{method}, *args, &block)
+          end
+        END
       end
     end
   end
