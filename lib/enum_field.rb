@@ -1,17 +1,22 @@
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
-
-require 'rubygems'
-require 'enum_field/define_enum'
-require 'enum_field/exceptions'
-require 'enum_field/builder'
-require 'enum_field/enumerated_attribute'
-require 'activerecord'
-
-Module.send(:include, EnumField::DefineEnum)
-ActiveRecord::Base.send(:extend, EnumField::EnumeratedAttribute)
-
+# encoding: utf-8
 module EnumField
-  VERSION = '0.1.1'
+  VERSION = '0.1.2'
+  
+  autoload :DefineEnum, 'enum_field/define_enum'
+  autoload :Builder, 'enum_field/builder'
+  autoload :EnumeratedAttribute, 'enum_field/enumerated_attribute'
+  
+  class BadId < StandardError
+    def initialize(repeated_id)
+      @repeated_id = repeated_id
+    end
+    attr_reader :repeated_id
+  end
 
+  class RepeatedId < StandardError; end
+  class InvalidId < StandardError; end
+  class InvalidOptions < StandardError; end
+  class ObjectNotFound < StandardError; end
 end
+
+require 'enum_field/railtie' if defined?(Rails)
