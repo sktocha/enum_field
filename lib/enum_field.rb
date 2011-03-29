@@ -1,10 +1,9 @@
 # encoding: utf-8
 module EnumField
-  VERSION = '0.1.2'
-  
   autoload :DefineEnum, 'enum_field/define_enum'
   autoload :Builder, 'enum_field/builder'
   autoload :EnumeratedAttribute, 'enum_field/enumerated_attribute'
+  autoload :Version, 'enum_field/version'
   
   class BadId < StandardError
     def initialize(repeated_id)
@@ -20,4 +19,4 @@ module EnumField
 end
 
 Module.send(:include, EnumField::DefineEnum)
-require 'enum_field/railtie' if defined?(Rails)
+require 'enum_field/railtie'

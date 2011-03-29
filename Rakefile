@@ -1,28 +1,44 @@
-require 'rubygems' unless ENV['NO_RUBYGEMS']
-%w[rake rake/clean fileutils newgem rubigen].each { |f| require f }
-require File.dirname(__FILE__) + '/lib/enum_field'
+# encoding: utf-8
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+require File.join(File.dirname(__FILE__), 'lib', 'enum_field', 'version')
 
-# Generate all the Rake tasks
-# Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('enum_field', EnumField::VERSION) do |p|
-  p.developer('Sebastián Bernardo Galkin', 'sgalkin@grantaire.com.ar')
-  p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
-  p.post_install_message = 'PostInstall.txt' # TODO remove if post-install message not required
-  p.rubyforge_name       = p.name # TODO this is default value
-  p.extra_deps         = [
-     ['activerecord'],
-   ]
-  p.extra_dev_deps = [
-    ['newgem', ">= #{::Newgem::VERSION}"]
-  ]
+desc 'Default: run unit tests.'
+task :default => :test
 
-  p.clean_globs |= %w[**/.DS_Store tmp *.log]
-  path = (p.rubyforge_name == p.name) ? p.rubyforge_name : "\#{p.rubyforge_name}/\#{p.name}"
-  p.remote_rdoc_dir = File.join(path.gsub(/^#{p.rubyforge_name}\/?/,''), 'rdoc')
-  p.rsync_args = '-av --delete --ignore-errors'
+desc 'Test the enum_field plugin.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
 end
 
-require 'newgem/tasks' # load /tasks/*.rake
-Dir['tasks/**/*.rake'].each { |t| load t }
+desc 'Generate documentation for the enum_field plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title    = 'EnumField'
+  rdoc.options << '--line-numbers' << '--inline-source'
+  rdoc.rdoc_files.include('README.rdoc')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
 
-task :default => [:spec]
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |s|
+    s.name = "enum_field"
+    s.version = EnumField::VERSION
+    s.summary = "Enumerated attributes"
+    s.description = "Enables Active Record attributes to point to enum like objects, by saving in your database only an integer ID"
+    s.email = "galeta.igor@gmail.com"
+    s.homepage = "https://github.com/galetahub/enum_field"
+    s.authors = ["Igor Galeta", "Pavlo Galeta"]
+    s.files =  FileList["[A-Z]*", "lib/**/*"]
+    s.extra_rdoc_files = FileList["[A-Z]*"] - %w(Rakefile)
+  end
+  
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end

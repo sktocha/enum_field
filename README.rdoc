@@ -114,8 +114,6 @@ The library also mimics has_many :through behavior, for cases such as:
 == REQUIREMENTS:
 
 * activerecord
-* hoe
-* rubyforge
 
 
 == INSTALL:
