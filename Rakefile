@@ -27,7 +27,7 @@ end
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "enum_field"
+    s.name = "galetahub-enum_field"
     s.version = EnumField::VERSION
     s.summary = "Enumerated attributes"
     s.description = "Enables Active Record attributes to point to enum like objects, by saving in your database only an integer ID"

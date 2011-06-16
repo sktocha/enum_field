@@ -74,7 +74,5 @@ module EnumField
       @sorted << obj
       @name2obj[name] = obj
     end
-
   end
 end
-
