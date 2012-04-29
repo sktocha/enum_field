@@ -45,7 +45,6 @@ module EnumField
 
     def assign_id(obj, candidate_id)
       id = new_id(candidate_id)
-      obj.class.send(:attr_reader, :id)
       obj.instance_variable_set(:@id, id)
     end
 

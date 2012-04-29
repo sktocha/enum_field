@@ -32,6 +32,8 @@ If you are not confortable with any of this options, maybe +enum_field+ is an an
 == BASIC USAGE:
 
   class Role
+    include EnumField::DefineEnum
+
     define_enum do |builder|
       builder.member :admin
       builder.member :manager
@@ -55,6 +57,8 @@ If you are not confortable with any of this options, maybe +enum_field+ is an an
 Your enum classes can have all the methods you need:
 
   class PhoneType
+    include EnumField::DefineEnum
+
     def initialize(name)
       @name = name
     end
@@ -83,6 +87,8 @@ You have some +AR+ like methods in enum classes
 The library also mimics has_many :through behavior, for cases such as:
 
   class Role
+    include EnumField::DefineEnum
+
     define_enum do |builder|
       builder.member :admin
       builder.member :manager
@@ -118,7 +124,7 @@ The library also mimics has_many :through behavior, for cases such as:
 
 == INSTALL:
 
-  rails plugin install git://github.com/galetahub/enum_field.git
+  gem 'galetahub-enum_field', :require => 'enum_field'
 
 == LICENSE:
 
