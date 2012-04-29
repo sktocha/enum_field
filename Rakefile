@@ -23,22 +23,3 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README.rdoc')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "galetahub-enum_field"
-    s.version = EnumField::VERSION
-    s.summary = "Enumerated attributes"
-    s.description = "Enables Active Record attributes to point to enum like objects, by saving in your database only an integer ID"
-    s.email = "galeta.igor@gmail.com"
-    s.homepage = "https://github.com/galetahub/enum_field"
-    s.authors = ["Igor Galeta", "Pavlo Galeta"]
-    s.files =  FileList["[A-Z]*", "lib/**/*"]
-    s.extra_rdoc_files = FileList["[A-Z]*"] - %w(Rakefile)
-  end
-  
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler not available. Install it with: gem install jeweler"
-end
