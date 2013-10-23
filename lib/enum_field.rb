@@ -18,4 +18,4 @@ module EnumField
   class ObjectNotFound < StandardError; end
 end
 
-require 'enum_field/railtie'
+require 'enum_field/railtie' if defined?(Rails)
