@@ -68,7 +68,7 @@ module EnumField
       association_ids = association.to_s.singularize + '_ids'
       has_many_aux = through.demodulize.underscore.pluralize
 
-      has_many has_many_aux, {:class_name => through, :dependent => :destroy}
+      has_many has_many_aux.to_sym, {:class_name => through, :dependent => :destroy}
 
       define_method(association) do
         self.send(has_many_aux).map(&enum_attr.to_sym)
